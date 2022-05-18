@@ -1,26 +1,17 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts, productsSelector } from '../../redux/product/productsSlice';
-
-const { getProducts, getProductsLoading } = productsSelector;
+import { Route, Routes } from 'react-router';
+import routes from '../../routes/routes';
+import Landing from '../Landing/Landing';
 
 function App() {
-
-  const loading = useSelector(getProductsLoading);
-  const products = useSelector(getProducts);
-  const dispatch = useDispatch();
-
-  console.log('++', products);
-
-  useEffect(() => {
-    // dispatch(fetchProducts());
-  }, []);
-
   return (
-    <div className="App">
-      <>{loading ? 'yes' : 'no'}</>
-      {/* <button onClick={() => } >setLoading</button> */}
-    </div>
+    <Routes>
+      {Object.keys(routes).map((route) => 
+        <Route
+          element={routes[route].component} 
+          key={routes[route].path} 
+          path={routes[route].path} />
+      )}
+    </Routes>
   );
 }
 
