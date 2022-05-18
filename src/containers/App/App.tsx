@@ -1,15 +1,19 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProductDetails } from '../../redux/product/productDetailsSlice';
-import { RootState } from '../../store';
+import { fetchProducts, productsSelector } from '../../redux/product/productsSlice';
+
+const { getProducts, getProductsLoading } = productsSelector;
 
 function App() {
 
-  const loading = useSelector((state: RootState) => state.productDetails.loading)
-  const dispatch = useDispatch()
+  const loading = useSelector(getProductsLoading);
+  const products = useSelector(getProducts);
+  const dispatch = useDispatch();
+
+  console.log('++', products);
 
   useEffect(() => {
-    dispatch(fetchProductDetails('1'));
+    // dispatch(fetchProducts());
   }, []);
 
   return (

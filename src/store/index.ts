@@ -1,10 +1,11 @@
 import createSagaMiddleware from "redux-saga";
 import { ReduxSagaContext } from "./ReduxSagaContext";
-import { configureStore } from '@reduxjs/toolkit'
+import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import productReducer from '../redux/product/productDetailsSlice';
+import productsReducer from '../redux/product/productsSlice';
 import { getApiProduct } from "../api/apiProduct";
-import {applyMiddleware} from 'redux';
 import allSagas from '../sagas';
+import { ProductState } from "../constants/types";
 
 const sagaMiddleware = createSagaMiddleware(
   {
@@ -17,7 +18,10 @@ const sagaMiddleware = createSagaMiddleware(
 
 export const store = configureStore({
   reducer: {
-    productDetails: productReducer,
+    product: combineReducers<ProductState>({
+      productDetails: productReducer,
+      products: productsReducer,
+    })
   },
   middleware: [sagaMiddleware]
 })
